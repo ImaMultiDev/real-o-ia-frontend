@@ -59,7 +59,7 @@ function HomePage() {
             <img
               src={logo}
               alt="App Logo"
-              className="w-32 h-32 mx-auto rounded-2xl shadow-lg mb-4"
+              className="w-72 mx-auto rounded-2xl shadow-lg mb-4"
             />
             <h1 className="text-3xl font-bold text-white mb-2">Welcome</h1>
             <p className="text-gray-300 text-lg mb-4">Join the game to test your skills!</p>
