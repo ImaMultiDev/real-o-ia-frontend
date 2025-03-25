@@ -142,123 +142,135 @@ function GamePage() {
   }
 
   return (
-    <div className="w-screen h-screen bg-gradient-to-b from-blue-900 to-indigo-900 flex flex-col py-8">
-      <div className="bg-gray-800 bg-opacity-60 container mx-auto p-8 text-white rounded-lg shadow-lg">
-        <div className="bg-gray-800 bg-opacity-60 container mx-auto my-2 p-6 text-white rounded-lg shadow-lg">
-          <div className="flex justify-between items-center mb-4">
+    <div className="h-[calc(100vh-5rem)] bg-gradient-to-b from-blue-900 to-indigo-900 flex items-center justify-center">
+      <div className="w-full max-w-4xl mx-auto px-4 flex items-center">
+        <div className="bg-gray-800 bg-opacity-60 w-full text-white rounded-lg shadow-xl flex flex-col max-h-[calc(100vh-7rem)]">
+          <div className="flex justify-between items-center px-6 py-2 border-b border-gray-700">
             <p className="text-xl text-green-500 font-bold">Puntuación actual: {score}</p>
             <p className="text-xl font-bold text-yellow-300">Mejor puntuación: {bestScore}</p>
           </div>
 
-          <AnimatePresence>
-            {gameOver ? (
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="text-center"
-              >
-                <h2 className="text-4xl font-bold mb-4">Fin del juego</h2>
-                <p className="text-lg mb-4 font-mono text-yellow-300">Tu puntuación: {score}</p>
-                <p className="text-4xl my-8 font-bold text-red-500">
-                  Vidas restantes: 0
-                </p>
-                <motion.button 
-                  onClick={resetGame}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="text-xl bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 transition duration-200 rounded-full my-6"
+          <div className="flex-1 p-3 flex flex-col justify-center m-auto">
+            <AnimatePresence>
+              {gameOver ? (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="text-center py-6"
                 >
-                  Jugar de nuevo
-                </motion.button>
-              </motion.div>
-            ) : (
-              <div className="flex flex-col items-center">
-                {loading && <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>}
-                {error && <p className="text-red-500 my-4 font-bold">{error}</p>}
-                
-                {feedback && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className={`my-2 p-2 rounded-md font-bold ${
-                      feedback.type === 'success' 
-                        ? 'text-green-500 bg-green-900 bg-opacity-30' 
-                        : 'text-red-500 bg-red-900 bg-opacity-30'
-                    }`}
-                  >
-                    {feedback.message}
-                  </motion.div>
-                )}
-
-                {!loading && imageId && <p className="text-xs text-gray-400 mb-2">Imagen ID: {imageId}</p>}
-
-                {image && (
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    key={imageId}
-                    className="relative w-full max-w-2xl aspect-[4/3] mx-auto overflow-hidden rounded-lg mb-4 bg-gray-800"
-                  >
-                    <img
-                      src={image}
-                      alt="¿Real o IA?"
-                      className="w-full h-full object-contain"
-                      onError={() => {
-                        console.error("Error al cargar la imagen");
-                        setError("Error al cargar la imagen. Intenta nuevamente.");
-                        loadImage();
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-20 pointer-events-none"></div>
-                  </motion.div>
-                )}
-
-                <div className="flex justify-center space-x-4 mt-4">
-                  <motion.button
-                    onClick={() => handleGuess(true)}
+                  <h2 className="text-3xl font-bold mb-3">Fin del juego</h2>
+                  <p className="text-xl mb-3 font-mono text-yellow-300">Tu puntuación: {score}</p>
+                  <p className="text-3xl mb-4 font-bold text-red-500">
+                    Vidas restantes: 0
+                  </p>
+                  <motion.button 
+                    onClick={resetGame}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    disabled={loading || isSubmitting}
-                    className={`text-xl ${
-                      isSubmitting ? 'bg-gray-500' : 'bg-blue-500 hover:bg-blue-700'
-                    } text-white font-bold py-2 px-6 rounded-full`}
+                    className="text-xl bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-8 transition duration-200 rounded-full"
                   >
-                    Real
+                    Jugar de nuevo
                   </motion.button>
-                  <motion.button
-                    onClick={() => handleGuess(false)}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    disabled={loading || isSubmitting}
-                    className={`text-xl ${
-                      isSubmitting ? 'bg-gray-500' : 'bg-red-500 hover:bg-red-700'
-                    } text-white font-bold py-2 px-6 rounded-full`}
-                  >
-                    IA
-                  </motion.button>
-                </div>
-
-                <div className="flex items-center mt-4">
-                  <span className="text-xl font-bold mr-2">Vidas:</span>
-                  {[...Array(5)].map((_, i) => (
+                </motion.div>
+              ) : (
+                <div className="flex flex-col items-center justify-between h-full max-h-[calc(100vh-12rem)]">
+                  {loading && (
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-500"></div>
+                  )}
+                  
+                  {error && (
+                    <p className="text-red-500 text-sm font-bold">{error}</p>
+                  )}
+                  
+                  {feedback && (
                     <motion.div
-                      key={i}
-                      animate={{
-                        scale: i < attemptsLeft ? 1 : 0.8,
-                        opacity: i < attemptsLeft ? 1 : 0.5
-                      }}
-                      transition={{ type: 'spring', stiffness: 500 }}
-                      className={`w-6 h-6 rounded-full mx-1 ${
-                        i < attemptsLeft ? 'bg-red-500' : 'bg-gray-500'
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className={`px-4 py-2 rounded-md font-bold ${
+                        feedback.type === 'success' 
+                          ? 'text-green-500 bg-green-900 bg-opacity-30' 
+                          : 'text-red-500 bg-red-900 bg-opacity-30'
                       }`}
-                    />
-                  ))}
+                    >
+                      {feedback.message}
+                    </motion.div>
+                  )}
+
+                  {!loading && imageId && (
+                    <p className="text-xs text-gray-400">Imagen ID: {imageId}</p>
+                  )}
+
+                  {image && (
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      key={imageId}
+                      className="relative w-full max-w-xl mx-auto"
+                    >
+                      <div className="aspect-[4/3] max-h-[50vh] bg-gray-900 rounded-lg overflow-hidden">
+                        <img
+                          src={image}
+                          alt="¿Real o IA?"
+                          className="w-full h-full object-contain"
+                          onError={() => {
+                            console.error("Error al cargar la imagen");
+                            setError("Error al cargar la imagen. Intenta nuevamente.");
+                            loadImage();
+                          }}
+                        />
+                      </div>
+                    </motion.div>
+                  )}
+
+                  <div className="flex flex-col gap-4 mt-2">
+                    <div className="flex justify-center gap-6">
+                      <motion.button
+                        onClick={() => handleGuess(true)}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        disabled={loading || isSubmitting}
+                        className={`text-lg ${
+                          isSubmitting ? 'bg-gray-500' : 'bg-blue-500 hover:bg-blue-700'
+                        } text-white font-bold py-2 px-8 rounded-full transition-colors`}
+                      >
+                        Real
+                      </motion.button>
+                      <motion.button
+                        onClick={() => handleGuess(false)}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        disabled={loading || isSubmitting}
+                        className={`text-lg ${
+                          isSubmitting ? 'bg-gray-500' : 'bg-red-500 hover:bg-red-700'
+                        } text-white font-bold py-2 px-8 rounded-full transition-colors`}
+                      >
+                        IA
+                      </motion.button>
+                    </div>
+
+                    <div className="flex items-center justify-center">
+                      <span className="text-lg font-bold mr-2">Vidas:</span>
+                      {[...Array(5)].map((_, i) => (
+                        <motion.div
+                          key={i}
+                          animate={{
+                            scale: i < attemptsLeft ? 1 : 0.8,
+                            opacity: i < attemptsLeft ? 1 : 0.5
+                          }}
+                          transition={{ type: 'spring', stiffness: 500 }}
+                          className={`w-4 h-4 rounded-full mx-1 ${
+                            i < attemptsLeft ? 'bg-red-500' : 'bg-gray-500'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            )}
-          </AnimatePresence>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </div>
