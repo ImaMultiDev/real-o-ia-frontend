@@ -91,11 +91,11 @@ function Navbar() {
 
   return (
     <>
-      <div className="bg-blue-900 text-white pt-4 px-8 flex items-center justify-between shadow-lg">
+      <div className="h-20 bg-blue-900 text-white px-8 flex items-center justify-between shadow-lg fixed top-0 w-full z-50">
         {showBackButton && (
           <button
             onClick={handleBackButton}
-            className="flex items-center bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 mr-12 rounded-lg shadow-md transform transition-transform hover:scale-105"
+            className="flex items-center bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg shadow-md transform transition-transform hover:scale-105"
           >
             <span className="mr-2">⬅</span>
             <span>Back</span>
@@ -106,7 +106,7 @@ function Navbar() {
           <img 
             src={logo} 
             alt="App Logo" 
-            className="w-12 h-12 rounded-full mx-auto cursor-pointer"
+            className="w-12 h-12 rounded-full cursor-pointer"
             onClick={() => navigate('/')} 
           />
         </div>
@@ -140,9 +140,11 @@ function Navbar() {
         )}
       </div>
 
+      <div className="h-20"></div> {/* Espaciador para compensar el navbar fijo */}
+
       {showAuthModal && (
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md m-4">
             <UserAuth
               mode={authMode}
               onClose={() => setShowAuthModal(false)}
