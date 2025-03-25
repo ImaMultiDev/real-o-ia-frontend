@@ -14,9 +14,9 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="flex flex-col min-h-screen">
+        <div className="h-screen w-screen overflow-hidden">
           <Navbar />
-          <div className="flex-1">
+          <main className="h-[calc(100vh-5rem)] w-full">
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/instructions" element={<Instructions />} />
@@ -46,7 +46,7 @@ function App() {
                 } 
               />
             </Routes>
-          </div>
+          </main>
         </div>
       </Router>
     </AuthProvider>
