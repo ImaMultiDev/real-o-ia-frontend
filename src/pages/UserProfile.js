@@ -94,8 +94,8 @@ function UserProfile() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-blue-900 to-indigo-900 py-8 px-4 overflow-y-auto">
-      <div className="container mx-auto max-w-lg">
+    <div className="h-[calc(100vh-5rem)] w-full bg-gradient-to-b from-blue-900 to-indigo-900 overflow-auto">
+      <div className="container mx-auto max-w-lg px-4 py-6">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
